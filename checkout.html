@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - NovaShop Ethiopia</title>
+    <meta name="description" content="Complete your order at NovaShop Ethiopia with secure payment options">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%2300d4ff'>⌚</text></svg>">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        .checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            margin-top: 80px;
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .checkout-header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .checkout-form {
+            background: rgba(26, 30, 63, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section h2 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(10, 14, 39, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(10, 14, 39, 0.8);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+        }
+
+        .form-group-inline {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(10, 14, 39, 0.6);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary-color);
+            background: rgba(10, 14, 39, 0.8);
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+        }
+
+        .payment-option label {
+            flex: 1;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .payment-option-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payment-details {
+            display: none;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .payment-details.active {
+            display: block;
+        }
+
+        .payment-details p {
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-label {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+            margin-left: 0.5rem;
+        }
+
+        .order-summary {
+            background: rgba(26, 30, 63, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .summary-items {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .summary-item-name {
+            color: var(--text-secondary);
+        }
+
+        .summary-item-price {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .summary-totals {
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .summary-row.total {
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.75rem;
+            margin-top: 0.75rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .checkout-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
+
+        .success-container {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .success-container.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: #4cd342;
+            margin-bottom: 1rem;
+            animation: scaleUp 0.5s ease;
+        }
+
+        .success-message h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .order-id {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .order-id label {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .order-id code {
+            background: rgba(0, 212, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .success-actions a,
+        .success-actions button {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .success-actions .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--dark-bg);
+        }
+
+        .success-actions .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .success-actions .btn-secondary:hover {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+        }
+
+        .error-message {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-content {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+
+            .checkout-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-group-inline {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <i class="fas fa-watch"></i>
+                <span class="brand-text">NovaShop</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="checkout-container">
+        <!-- Back Button -->
+        <a href="cart.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Cart
+        </a>
+
+        <!-- Checkout Header -->
+        <div class="checkout-header">
+            <h1>Complete Your Order</h1>
+            <p class="text-secondary">Secure checkout with multiple payment options</p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorText"></span>
+        </div>
+
+        <!-- Checkout Content -->
+        <div class="checkout-content">
+            <!-- Checkout Form -->
+            <div class="checkout-form" id="checkoutForm">
+                <!-- Customer Information -->
+                <div class="form-section">
+                    <h2>
+                        <i class="fas fa-user"></i>
+                        Customer Information
+                    </h2>
+                    
+                    <div class="form-group-inline">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" placeholder="+251" required>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="form-section">
+                    <h2>
+                        <i class="fas fa-map-marker-alt"></i>
+                        Delivery Address
+                    </h2>
+
+                    <div class="form-group">
+                        <label for="address">Street Address *</label>
+                        <input type="text" id="address" required>
+                    </div>
+
+                    <div class="form-group-inline">
+                        <div class="form-group">
+                            <label for="city">City/Town *</label>
+                            <input type="text" id="city" value="Addis Ababa" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="zone">Zone/Region *</label>
+                            <input type="text" id="zone" placeholder="e.g., Gulelle" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Delivery Notes (Optional)</label>
+                        <input type="text" id="notes" placeholder="e.g., Near the green gate">
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="form-section">
+                    <h2>
+                        <i class="fas fa-credit-card"></i>
+                        Payment Method
+                    </h2>
+
+                    <div class="payment-methods">
+                        <!-- Telebirr -->
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="telebirr" checked>
+                            <div class="payment-option-title">
+                                <i class="fas fa-mobile-alt"></i>
+                                Telebirr (Mobile Money)
+                            </div>
+                        </label>
+                        <div class="payment-details active" id="telebirrDetails">
+                            <p><span class="detail-label">Merchant Code:</span><span class="detail-value">NOVASHOP001</span></p>
+                            <p><span class="detail-label">Account:</span><span class="detail-value">+251-900-000-001</span></p>
+                            <p style="color: var(--primary-color); font-weight: 600; margin-top: 0.5rem;">
+                                ✓ Instant payment confirmation
+                            </p>
+                        </div>
+
+                        <!-- Bank Transfer -->
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="bank">
+                            <div class="payment-option-title">
+                                <i class="fas fa-university"></i>
+                                Bank Transfer (CBE)
+                            </div>
+                        </label>
+                        <div class="payment-details" id="bankDetails">
+                            <p><span class="detail-label">Bank:</span><span class="detail-value">Commercial Bank of Ethiopia</span></p>
+                            <p><span class="detail-label">Account Name:</span><span class="detail-value">NovaShop Ethiopia</span></p>
+                            <p><span class="detail-label">Account Number:</span><span class="detail-value">1000123456789</span></p>
+                            <p><span class="detail-label">Branch Code:</span><span class="detail-value">011001</span></p>
+                            <p style="color: var(--primary-color); font-weight: 600; margin-top: 0.5rem;">
+                                ✓ Transfer reference: Use your Order ID
+                            </p>
+                        </div>
+
+                        <!-- Cash on Delivery -->
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="cod">
+                            <div class="payment-option-title">
+                                <i class="fas fa-money-bill"></i>
+                                Cash on Delivery
+                            </div>
+                        </label>
+                        <div class="payment-details" id="codDetails">
+                            <p><span class="detail-label">Payment at:</span><span class="detail-value">Upon delivery</span></p>
+                            <p><span class="detail-label">Accepted:</span><span class="detail-value">Ethiopian Birr (ETB)</span></p>
+                            <p><span class="detail-label">Delivery Time:</span><span class="detail-value">1-3 business days</span></p>
+                            <p style="color: var(--primary-color); font-weight: 600; margin-top: 0.5rem;">
+                                ✓ No upfront payment required
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place Order Button -->
+                <button class="checkout-btn" id="placeOrderBtn">
+                    <i class="fas fa-check-circle"></i>
+                    Place Order
+                </button>
+            </div>
+
+            <!-- Order Summary Sidebar -->
+            <div class="order-summary">
+                <h3 class="summary-title">
+                    <i class="fas fa-receipt"></i>
+                    Order Summary
+                </h3>
+
+                <div class="summary-items" id="summaryItems">
+                    <!-- Items populated by JS -->
+                </div>
+
+                <div class="summary-totals">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">ETB 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (15%):</span>
+                        <span id="taxAmount">ETB 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee:</span>
+                        <span id="deliveryFee">ETB 0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="totalPrice">ETB 0</span>
+                    </div>
+                </div>
+
+                <div style="padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+                    <i class="fas fa-shield-alt" style="color: var(--primary-color);"></i>
+                    <span style="margin-left: 0.5rem;">Secure payment processing</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Container -->
+        <div class="success-container" id="successContainer">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+
+            <div class="success-message">
+                <h2>Order Confirmed! 🎉</h2>
+                <p>Thank you for your order. Your smart watch is on its way!</p>
+            </div>
+
+            <div class="order-id">
+                <p>
+                    <label>Order ID:</label><br>
+                    <code id="orderIdDisplay"></code>
+                </p>
+            </div>
+
+            <div style="background: rgba(0, 212, 255, 0.1); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; text-align: left;">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">What's Next?</h3>
+                <ul style="list-style: none; color: var(--text-secondary);">
+                    <li style="margin-bottom: 0.75rem;">
+                        <i class="fas fa-check" style="color: #4cd342; margin-right: 0.5rem;"></i>
+                        You'll receive a confirmation email shortly
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <i class="fas fa-check" style="color: #4cd342; margin-right: 0.5rem;"></i>
+                        We'll send tracking updates via WhatsApp
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <i class="fas fa-check" style="color: #4cd342; margin-right: 0.5rem;"></i>
+                        Delivery within 1-3 business days
+                    </li>
+                    <li>
+                        <i class="fas fa-check" style="color: #4cd342; margin-right: 0.5rem;"></i>
+                        30-day returns available
+                    </li>
+                </ul>
+            </div>
+
+            <div class="success-actions">
+                <a href="index.html" class="btn-primary">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+                <a href="https://wa.me/0983156393?text=Hi%20NovaShop,%20I%20just%20placed%20order%20" id="whatsappLink" class="btn-secondary">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: 4rem;">
+        <div class="footer-bottom">
+            <p>&copy; 2026 NovaShop Ethiopia. All rights reserved. | Secure Checkout</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="checkout.js"></script>
+</body>
+</html>
