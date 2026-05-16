@@ -1,0 +1,66 @@
+{
+  "name": "NovaShop Ethiopia - Smart Watch E-Commerce",
+  "version": "2.0.0",
+  "description": "Futuristic dark-themed e-commerce platform for premium smart watches with Telebirr payment integration",
+  "keywords": [
+    "smart-watch",
+    "ecommerce",
+    "telebirr",
+    "ethiopia",
+    "futuristic",
+    "dark-theme",
+    "neon",
+    "glassmorphism"
+  ],
+  "author": "NovaShop Ethiopia",
+  "license": "Proprietary",
+  "homepage": "https://github.com/chalamohammed365-bot/super-duper-fiesta",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chalamohammed365-bot/super-duper-fiesta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chalamohammed365-bot/super-duper-fiesta/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "start": "open index.html",
+    "dev": "python -m http.server 8000",
+    "build": "echo 'Static site - no build needed'",
+    "test": "echo 'Tests not configured yet'",
+    "deploy": "git push origin main"
+  },
+  "devDependencies": {},
+  "dependencies": {},
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Safari versions",
+    "last 2 Edge versions"
+  ],
+  "features": {
+    "cart": {
+      "enabled": true,
+      "localStorage": true,
+      "maxItems": 99
+    },
+    "checkout": {
+      "enabled": true,
+      "paymentMethods": [
+        "telebirr",
+        "bank_transfer",
+        "cash_on_delivery"
+      ]
+    },
+    "analytics": {
+      "facebook_pixel": true,
+      "google_analytics": false
+    },
+    "security": {
+      "https": true,
+      "csp": true
+    }
+  }
+}
